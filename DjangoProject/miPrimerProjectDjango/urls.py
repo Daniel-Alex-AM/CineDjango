@@ -30,5 +30,7 @@ urlpatterns = [
     path('persona/', include('apps.persona.urls')),
     path('pelicula/', include('apps.pelicula.urls')),
     path('sala/', include('apps.sala.urls')),
-    path('funcion/', include('apps.funcion.urls'))
+    path('funcion/', include('apps.funcion.urls')),
+    path('butaca/', include('apps.butaca.urls'))
+
 ]
