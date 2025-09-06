@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+
+    </title>
+    {% include 'estilos.html'%}
+
+</head>
+
+<body>
+    {% include 'menu.html' %}
+
+
+    <div class="container mt-3">
+        <h1>Editar persona</h1>
+
+        <fieldset>
+            <legend>Datos Persona</legend>
+            <form method="POST" action="/persona/guardarpersona/" class="mb-3">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">ID</label>
+                    <input
+                        name="idpersona"
+                        value="{{obj.IDPERSONA}}"
+                        readonly
+                        type="text"
+                        class="form-control"
+                        id="txtidpais"
+                        placeholder="ID Persona">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">DNI</label>
+                    <input
+                        name="dnipersona"
+                        value="{{obj.DNI}}"
+                        type="text"
+                        class="form-control"
+                        id="txtdnipersona"
+                        required
+                        placeholder="DNI">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre(s)</label>
+                    <input
+                        value="{{obj.NOMBRE}}"
+                        name="nombrepersona"
+                        type="text"
+                        class="form-control"
+                        id="txtnombrepersona"
+                        placeholder="Nombre Persona"
+                        required>
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="form-label">A. Paterno</label>
+                    <input
+                        value="{{obj.APPATERNO}}"
+                        name="apaternopersona"
+                        type="text"
+                        class="form-control"
+                        id="txtapaternopersona"
+                        placeholder="Apellido Paterno"
+                        required>
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="form-label">A. Materno</label>
+                    <input
+                        value="{{obj.APMATERNO}}"
+                        name="amaternopersona"
+                        type="text"
+                        class="form-control"
+                        id="txtamaternopersona"
+                        placeholder="Apellido Materno">
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="form-label">Fecha nacimiento</label>
+                    <input
+                        value="{{obj.FECHANAC}}"
+                        name="fechanac"
+                        type="date"
+                        class="form-control"
+                        id="txtfechanac"
+                        placeholder="Fecha nacimiento">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Direccion</label>
+                    <input
+                        value="{{obj.DIRECCION}}"
+                        name="direccion"
+                        type="text"
+                        class="form-control"
+                        id="txtdireccion"
+                        placeholder="Direccion">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Telefono fijo</label>
+                    <input
+                        value="{{obj.TELEFONOFIJO}}"
+                        name="telfijo"
+                        type="text"
+                        class="form-control"
+                        id="txttelfijo"
+                        placeholder="Telefono Fijo">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Telefono celular</label>
+                    <input
+                        value="{{obj.TELEFONOCELULAR}}"
+                        name="telcel"
+                        type="text"
+                        class="form-control"
+                        id="txttelcel"
+                        placeholder="Telefono celular">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Seleccione Sexo</label>
+
+                    <select name="idsexo" class="form-control">
+                        <option value="0">
+                            --Seleccione--
+                        </option>
+
+                        {% for sexo in listaSexo %}
+
+                        {% if sexo.IDSEXO == obj.IDSEXO %}
+                        <option value="{{sexo.IDSEXO}}" selected>
+                            {{sexo.NOMBRE}}
+                        </option>
+                        {% else %}
+                        <option value="{{sexo.IDSEXO}}">
+                            {{sexo.NOMBRE}}
+                        </option>
+                        {% endif %}
+
+                        
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+
+
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-success" value="Guardar">
+                    <a class="btn btn-danger" href="/persona/listar/">Regresar</a>
+
+                    </div>
+            </form>
+            <button class="btn btn-secondary" onclick="NuevoPais()">Clear</button>
+
+        </fieldset>
+
+    </div>
+
+    {% include 'scripts.html' %}
+</body>
+
+</html>

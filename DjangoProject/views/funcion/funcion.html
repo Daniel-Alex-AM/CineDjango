@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+    {% include 'estilos.html' %}
+
+</head>
+
+<body>
+
+    {% include 'menu.html' %}
+    <div class="container mt-3">
+
+        <div class="input-group mb-3">
+
+            <label>Pelicula</label>
+
+            <select id="cboPeliculaBuscar" class="form-control" onchange="filtrarFuncionxPelicula()"></select>
+        </div>
+
+
+
+        <div id="divTabla"></div>
+
+        <!----------------------------------------------------->
+        <!-- Button trigger modal -->
+        <button type="button"
+            class="btn btn-primary mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            onclick="Editar()">
+                Nuevo
+        </button>
+
+        <div class="modal fade form-funcion" id="exampleModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                    </div>
+                    <div class="modal-body">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">ID Función</label>
+                            <input readonly type="text" class="form-control" id="txtidfuncion"
+                                placeholder="ID Funcion">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Fecha función</label>
+                            <input type="datetime-local" class="form-control" id="txtfechafuncion" placeholder="Fecha Funcion">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Pelicula</label>
+                            <select id="cboPeliculaPop" class="form-control"></select>
+
+                        </div>
+
+                        <div class="mb-3" id="divCinePop">
+                            <label class="form-label">Cine</label>
+                            <select onchange="llenarSalas()" id="cboCinePop" class="form-control"></select>
+
+                        </div>
+
+                        <div class="mb-3"  id="divSalaPop">
+                            <label class="form-label">Sala</label>
+                            <select id="cboSalaPop" class="form-control"></select>
+
+                        </div>
+
+                       
+                       
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="bntCerrarModal" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button onclick="guardarDatos()" type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+
+                    <div id="divErrores"></div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        {% include 'scripts.html' %}
+        <script type="text/javascript" src="{% static 'js/funcion.js'%}"></script>
+</body>
+
+</html>

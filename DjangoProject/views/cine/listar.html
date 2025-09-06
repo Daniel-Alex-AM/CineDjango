@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--A los th que estan dentro de dataframe-->
+    <style>
+        .dataframe th {
+            text-align: left;
+        }
+    </style>
+
+    {% include 'estilos.html' %}
+
+</head>
+
+<body>
+    {%include 'menu.html'%}
+    <h1>Cine</h1>
+
+    <div class="container mt-3 formulariocine">
+        <fieldset>
+            <legend>Datos Cine</legend>
+            <!--se cambia form por DIV para hacerlo ASYNC-->
+            <div class="mb-3 formcine">
+                <!--esto le agregha un name y value al-->
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">ID CIne</label>
+                    <input readonly type="text" class="form-control" id="txtidcine" placeholder="ID Cine">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre Cine</label>
+                    <input data-campo="Nombre Cine" type="text" class="form-control" id="txtnombrecine" placeholder="Nombre Cine">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Fecha apertura</label>
+                    <input data-campo="fecha apertura" placeholder="dd/mm/yyyy" type="text" id="txtfechaapertura" class="form-control"> <!--input date jqueryui, se llama en cine.js listar()-->
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="form-label">Tipo Cine</label>
+                    
+                    <!--Se llena en cine.js > listar > generic.js > llenarCombo-->
+                    <select data-campo="Tipo Cine" id="cboTipoCine" class="form-control">
+                        
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Direccion Cine</label>
+                    <textarea placeholder="Ingrese dirección" class="form-control" id="txtdireccioncine" rows="3"></textarea>
+                </div>
+
+
+                <div class="mb-3">
+                    <!--Se cambia de submit a BUTTON para ASYNC-->
+                    <input type="button" class="btn btn-success" value="Guardar" onclick="guardarCine()">
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="NuevoCine()">Clear</button>
+
+
+
+        </fieldset>
+
+            <div id="divErrores"></div> <!--Vacio por si hay errores cine.js lo popula-->
+
+    </div>
+
+
+    <div class="input-group mb-3 container mt-3">
+        <input type="text" class="form-control" placeholder="Ingrese nombre cine" aria-label="Recipient's username"
+            aria-describedby="button-addon2" id="txtnombre">
+        <button class="btn btn-outline-primary" onclick="buscarCine()" type="button" id="button-addon2">Buscar</button>
+    </div>
+    <div id="divTabla" class="container mt-3"> <!--MarginTop 3-->
+
+
+
+    </div>
+    {% include 'scripts.html' %}
+
+    <script type="text/javascript" src="{% static 'js/cine.js' %}"></script>
+
+
+</body>
+
+
+
+</html>

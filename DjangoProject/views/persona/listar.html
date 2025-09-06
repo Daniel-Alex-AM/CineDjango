@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--A los th que estan dentro de dataframe-->
+    <style>
+        .dataframe th {
+            text-align: left;
+        }
+    </style>
+
+    {% include 'estilos.html' %}
+
+</head>
+
+<body>
+    {%include 'menu.html'%}
+    <h1>Personas</h1>
+    <div class="input-group mb-3 container mt-3">
+
+        <input type="text" class="form-control" placeholder="Ingrese nombre persona" aria-label="Recipient's username"
+            aria-describedby="button-addon2" id="txtnombrepersona" onkeyup="buscarPersona()">
+    </div>
+
+    <div class="mb-3 container mt-3">
+        <a class="btn btn-secondary" href="/persona/agregarpersona/">Nuevo</a>
+    </div>
+    
+    
+    <div id="divTabla" class="container mt-3"> <!--MarginTop 3-->
+
+
+
+    </div>
+    {% include 'scripts.html' %}
+
+    <script type="text/javascript" src="{% static 'js/persona.js' %}"></script>
+
+
+</body>
+
+
+
+</html>
