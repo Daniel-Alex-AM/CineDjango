@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+    {% include 'estilos.html' %}
+</head>
+
+<body>
+
+    {% include 'menu.html' %}
+
+    <div class="container mt-3">
+
+
+        <!--FORMA ASINCRONA (sin form, sin post/token, sin action)-->
+        <div class="input-group mb-3">
+            <select id="cboCineBuscar" class="form-control"></select>
+            <button onclick="buscar()" class="btn btn-outline-primary" type="button" id="button-addon2">Buscar</button>
+        </div>
+
+        <div id="divTabla"></div>
+
+
+        
+        <!----------------------------------------------------->
+        <!-- Button trigger modal -->
+        <button type="button"
+            class="btn btn-primary mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            onclick="Editar()">
+                Nuevo
+        </button>
+
+        <div class="modal fade form-sala" id="exampleModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                    </div>
+                    <div class="modal-body">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">ID Sala</label>
+                            <input readonly type="text" class="form-control" id="txtidsala"
+                                placeholder="ID Sala">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre sala</label>
+                            <input type="text" class="form-control" id="txtnombresala" placeholder="Nombre Sala">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Num. columnas</label>
+                            <input type="number" class="form-control" id="txtnumcolumnas" placeholder="Ingrese num. columnas"
+                                min="0">
+                        </div>
+
+                         <div class="mb-3">
+                            <label class="form-label">Num. filas</label>
+                            <input type="number" class="form-control" id="txtnumfilas" placeholder="Ingrese num. filas"
+                                min="0">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cine</label>
+
+                            <!--Se llena en cine.js > listar > generic.js > llenarCombo-->
+                            <select id="cboCine" class="form-control"></select>
+                        </div>
+
+                       
+
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="cerrarModal()" id="bntCerrarModal" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button onclick="guardarDatos()" type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+
+                    <div id="divErrores"></div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+    {% include 'scripts.html' %}
+    <script type="text/javascript" src="{% static 'js/sala.js' %}"></script>
+
+</body>
+
+</html>

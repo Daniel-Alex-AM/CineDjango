@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+    {% include 'estilos.html' %}
+
+</head>
+
+<body>
+
+    {% include 'menu.html' %}
+    <div class="container mt-3">
+
+        <div class="input-group mb-3">
+
+            <label>Butacas</label>
+            <!--
+            <select id="cboPeliculaBuscar" class="form-control" onchange="filtrarFuncionxPelicula()"></select>
+            -->
+
+        </div>
+
+
+        <div class="container mt-3">
+            <div id="divTabla"></div>
+
+        </div>
+
+    </div>
+    {% include 'scripts.html' %}
+    <script type="text/javascript" src="{% static 'js/butaca.js'%}"></script>
+</body>
+
+</html>
