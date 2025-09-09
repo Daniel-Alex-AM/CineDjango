@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar usuario</title>
+    {% include 'estilos.html' %}
+</head>
+
+<body>
+    {% include 'menu.html' %}
+
+    <div class="container form-usuario">
+        {% csrf_token %}
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">ID Usuario</label>
+            <input readonly type="text" class="form-control" id="txtidusuario"  placeholder="ID Usuario">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Nombre usuario</label>
+            <input type="text" class="form-control" id="txtnombreusuario" data-campo="Nombre Usuario" placeholder="Nombre Usuario">
+            <div id="divtxtnombreusuario"></div>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Contraseña usuario</label>
+            <input type="password" class="form-control" id="txtpwduser" placeholder="Contraseña Usuario">
+            <div id="divtxtpwduser"></div>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <p>Tipo usuario</p>
+            <div class="input-group">
+                <input type="text" class="form-control" id="txtnombretipousuario" placeholder="Tipo de usuario" readonly
+                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary" type="button">Buscar</button>
+            </div>
+            <div id="divtxtnombretipousuario"></div>
+            
+        </div>
+
+        <div class="mb-3 mt-3">
+
+            <p>Persona</p>
+            <div class="input-group">
+                <input type="text" class="form-control" id="txtnombrepersona" placeholder="Persona" readonly
+                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary" type="button">Buscar</button>
+            </div>
+            <div id="divtxtnombrepersona"></div>
+
+        </div>
+
+
+
+        <div class="mb-3 mt-3">
+            <input type="button" class="btn btn-success" value="Guardar"
+                onclick="guardarDatos()">
+
+            <a class="btn btn-danger" href="/usuario/listar/">Regresar</a>
+
+        </div>
+
+    </div>
+
+    {% include 'scripts.html' %}
+    <script type="text/javascript" src="{% static 'js/addusuario.js' %}"></script>
+</body>
+
+</html>

@@ -207,7 +207,7 @@ function llenarCombo(data, propiedadId, propiedadMostrar, idCombo) {
 }
 
 
-function validarObligatorios(selectorCSS, camposObviar = []) {
+function validarObligatorios(selectorCSS, camposObviar = [], campoAcampo = false) {
     var errores = '<ol class="alert alert-danger">';
     var hayerrores = false;
     //var controles = document.getElementsByClassName("form-control")
@@ -218,33 +218,67 @@ function validarObligatorios(selectorCSS, camposObviar = []) {
         control = controles[i];
 
         if (control.tagName == "SELECT") { //INPUT - TEXTAREA
-            if (control.value == "0" && camposObviar.indexOf(control.id) == -1) { //si control.id no esta en el array camposObviar indexOf regresa -1
-                hayerrores = true;
-                errores += "<li>Debe ingresar "
+            if (campoAcampo == false) {
+                if (control.value == "0" && camposObviar.indexOf(control.id) == -1) { //si control.id no esta en el array camposObviar indexOf regresa -1
+                    hayerrores = true;
+                    errores += "<li>Debe ingresar "
 
-                custom_err_msg = control.getAttribute("data-campo");
-                if (custom_err_msg == null) {
-                    errores += control.id.replace("cbo", "");
-                }
-                else {
-                    errores += custom_err_msg;
-                }
+                    custom_err_msg = control.getAttribute("data-campo");
+                    if (custom_err_msg == null) {
+                        errores += control.id.replace("cbo", "");
+                    }
+                    else {
+                        errores += custom_err_msg;
+                    }
 
-                errores += "</li>"
+                    errores += "</li>"
+                }
+            } else {
+                if (control.value == "0" && camposObviar.indexOf(control.id) == -1) { //si control.id no esta en el array camposObviar indexOf regresa -1
+                    hayerrores = true;
+                    diverr = document.getElementById("div" + control.id);
+                    if (diverr) {
+                        custom_err_msg = control.getAttribute("data-campo");
+                        if (custom_err_msg == null) {
+                            diverr.innerHTML = "<span style='color:red'> Debe ingresar el " + control.id.replace("cbo", "") + "</span>"
+                        }
+                        else {
+                            diverr.innerHTML = "<span style='color:red'> Debe ingresar el " + custom_err_msg + "</span>"
+                        }
+                    }
+                }
             }
         } else {
 
-            if (control.value == "" && camposObviar.indexOf(control.id) == -1) {
-                hayerrores = true;
-                errores += "<li>Debe ingresar "
-                custom_err_msg = control.getAttribute("data-campo");
-                if (custom_err_msg == null) {
-                    errores += control.id.replace("txt", "")
-                } else {
-                    errores += custom_err_msg
+            if (campoAcampo == false) {
+                if (control.value == "" && camposObviar.indexOf(control.id) == -1) {
+                    hayerrores = true;
+                    errores += "<li>Debe ingresar "
+                    custom_err_msg = control.getAttribute("data-campo");
+                    if (custom_err_msg == null) {
+                        errores += control.id.replace("txt", "")
+                    } else {
+                        errores += custom_err_msg
+                    }
+                    errores += "</li>"
                 }
-                errores += "</li>"
+            } else {
+                if (control.value == "" && camposObviar.indexOf(control.id) == -1) {
+                    hayerrores = true;
+                    diverr = document.getElementById("div" + control.id);
+                    if (diverr) {
+                        custom_err_msg = control.getAttribute("data-campo");
+                        if (custom_err_msg == null) {
+                            diverr.innerHTML = "<span style='color:red'> Debe ingresar el " + control.id.replace("txt", "") + "</span>"
+                        }
+                        else {
+                            diverr.innerHTML = "<span style='color:red'> Debe ingresar el " + custom_err_msg + "</span>"
+                        }
+                    }
+                }
             }
+
+
         }
 
     }
@@ -310,6 +344,6 @@ function setD(id, valor) {
 
 "grid": Initializes a grid container, enabling a CSS Grid layout.
     */
-    
-    document.getElementById(id).style.display=valor;
+
+    document.getElementById(id).style.display = valor;
 }

@@ -236,3 +236,4 @@ Se pueden agregar propiedades custom a etiquetas HTML
 Doble click elemento HTML
 
 ondblclick="funcion()"
+
