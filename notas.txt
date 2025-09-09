@@ -233,3 +233,6 @@ Se pueden agregar propiedades custom a etiquetas HTML
     var fechaformat = fechamoment.format('DD/MM/YYYY HH:mm') //04/08/2025 22:55
 
 =======================================================================================================
+Doble click elemento HTML
+
+ondblclick="funcion()"

@@ -18,3 +18,11 @@ def buscarbutacas(request):
     idfunc = request.GET.get("idfuncion")
     resp = osql.listarJSONWeb("exec recuperarButacas '{}'".format(idfunc))
     return HttpResponse(resp)
+
+def deshabilitarbutaca(request):
+    osql = SQL()
+    idfuncion = request.GET.get("idfuncion")
+    idbutaca = request.GET.get("idbutaca")
+    query = "exec deshabilitarButaca '{}', '{}'".format(idfuncion, idbutaca)
+    resp = osql.enviarPost(query)
+    return HttpResponse(resp)
