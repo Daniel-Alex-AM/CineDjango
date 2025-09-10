@@ -97,8 +97,8 @@ function guardarDatos() {
         idsala
     }
 
-    fetchPost("/funcion/guardarfuncion/", objeto, function (data) {
-        confirmarAlert("¿Guardar cambios?", function (data) {
+    confirmarAlert("¿Guardar cambios?", function (data) {
+        fetchPost("/funcion/guardarfuncion/", objeto, function (data) {
             success()
             listar()
             limpiarCOntroles(".form-funcion .form-control")
@@ -113,8 +113,8 @@ function guardarDatos() {
 
 
 function Eliminar(id) {
-    confirmarAlert(undefined, function(){
-        fetchDel("/funcion/eliminarfuncion/?idfuncion="+id, function(){
+    confirmarAlert(undefined, function () {
+        fetchDel("/funcion/eliminarfuncion/?idfuncion=" + id, function () {
             listar()
         })
     });

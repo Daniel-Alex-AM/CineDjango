@@ -31,6 +31,7 @@ def guardarfuncion(request):
                                    '{}','{}','{}','{}','{}'"\
                                    .format(idfuncion, fechafunc, idpelicula, idcine, idsala))
      
+
      return HttpResponse(resp)
 
 def buscarsalas(request):
