@@ -4,5 +4,5 @@ window.onload = function () {
 
 
 function listar() {
-    pintar('/pagina/listarasync/', undefined, undefined, false, false, "IIDPAGINA", false, undefined, false, false)
+    pintar('/pagina/listarasync/', undefined, undefined, false, false, "IIDPAGINA", false, undefined, undefined, undefined,true)
 }

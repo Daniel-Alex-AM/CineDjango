@@ -14,7 +14,43 @@
     {% include 'menu.html' %}
 
     <div class="container">
-        <div id="divTabla"></div>
+
+       
+        <div class="container form-tipousr">
+            {% csrf_token %}
+
+            <div class="mb-3 mt-3">
+                <label class="form-label">ID Tipo Usuario</label>
+                <input readonly type="text" class="form-control" id="txtidtipousr" placeholder="ID Tipo Usuario">
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label class="form-label">Nombre Tipo usuario</label>
+                <input type="text" class="form-control" id="txtnombretipousr" data-campo="Nombre Tipo Usuario"
+                    placeholder="Nombre Tipo Usuario">
+                <div id="divtxtnombretipousuario"></div>
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label class="form-label">Descripcion</label>
+                <input type="text" class="form-control" id="txtdescripcion" data-campo="Descripcion Tipo Usuario"
+                    placeholder="Descripcion Tipo Usuario">
+                <div id="divtxtdescripcion"></div>
+            </div>
+
+            <div id="divTabla"></div>
+
+
+            <div class="mb-3 mt-3">
+                <input type="button" class="btn btn-success" value="Guardar" onclick="guardarDatos()">
+                <input type="button" class="btn btn-success" value="CheckBox" onclick="obtenerChecksSeleccionados()">
+
+                <a class="btn btn-danger" href="/usuario/listar/">Regresar</a>
+
+            </div>
+
+        </div>
+
     </div>
 
     {% include 'scripts.html' %}

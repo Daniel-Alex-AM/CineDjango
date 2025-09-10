@@ -10,11 +10,27 @@ window.onload = function () {
 
 }
 
+function obtenerChecksSeleccionados() {
+    //obtener los checkbox con class checkbox
+    var checkboxs = document.getElementsByClassName("checkbox")
+    var nchecks = checkboxs.length
+    var contenido = []
+    for (var i = 0; i < nchecks; i++) {
+        currCheck = checkboxs[i]
+        if (currCheck.checked == true) {
+            contenido.push(currCheck.id.replace("chk", ""))
+        }
+    }
+
+    var checklist = contenido.join("*")
+    alert(checklist)
+}
+
 var cabecerasJSON;
 function pintar(url, idDiv = "divTabla", idtabla = "tabla",
     opcionEdit = false, opcionElimina = false, propID = "Id",
     popup = false, titulos = [],
-    subpopup = false, propDisplay) {
+    subpopup = false, propDisplay, addChecks = false) {
 
     fetch(url).then(res => res.json())
         .then(res => {
@@ -33,6 +49,11 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             contenido += "<thead><tr>";
 
             if (titulos.length == 0) {
+
+                if (addChecks == true) {
+                    contenido += "<td></td>"
+                }
+
                 for (var i = 0; i < llaves.length; i++) {
                     if (llaves[i].toUpperCase() != propID.toUpperCase()) { //aqui no se pinta columna ID porque se pasa como argumento a la funcion
                         contenido += "<td>";
@@ -42,6 +63,9 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
                 }
             }
             else {
+                if (addChecks == true) {
+                    contenido += "<td></td>"
+                }
                 for (var i = 0; i < titulos.length; i++) {
                     if (titulos[i].toUpperCase() != propID.toUpperCase()) {
                         contenido += "<td>";
@@ -63,6 +87,15 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             for (var i = 0; i < res.length; i++) {
                 objeto = res[i];
                 contenido += "<tr>";
+
+                if (addChecks == true) {
+                    contenido += `
+                    <td>
+                    <input type='checkbox' class='checkbox' id='chk${objeto[propID]}'/>
+                    </td>
+                    `
+                }
+
                 for (var j = 0; j < llaves.length; j++) {
                     kactual = llaves[j];
                     if (kactual.toUpperCase() != propID.toUpperCase()) {
@@ -117,7 +150,7 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             contenido += "</tbody>"
             contenido += "</table>"
             document.getElementById(idDiv).innerHTML = contenido
-            $("#"+idtabla).DataTable();
+            $("#" + idtabla).DataTable();
 
         })
 }
@@ -264,9 +297,9 @@ function validarObligatorios(selectorCSS, camposObviar = [], campoAcampo = false
                         }
                     }
                 } else {
-                     diverr = document.getElementById("div" + control.id);
-                    if (diverr) { 
-                        diverr.innerHTML=""
+                    diverr = document.getElementById("div" + control.id);
+                    if (diverr) {
+                        diverr.innerHTML = ""
                     }
 
                 }
