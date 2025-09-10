@@ -33,5 +33,7 @@ urlpatterns = [
     path('funcion/', include('apps.funcion.urls')),
     path('butaca/', include('apps.butaca.urls')),
     path('usuario/', include('apps.usuario.urls')),
+    path('pagtipousr/', include('apps.pagtipousr.urls')),
+    path('pagtipousrbtn/', include('apps.pagtipousrbtn.urls')),
 
 ]
