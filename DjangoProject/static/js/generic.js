@@ -75,7 +75,7 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
                     contenido += "<td>";
                     if (opcionEdit == true) {
                         contenido += `
-                        <i class='btn btn-primary'
+                        <i class='btn btn-primary' id='btnModal'
                             onclick='Editar(${objeto[propID]})'
                             ${popup ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}
                             >

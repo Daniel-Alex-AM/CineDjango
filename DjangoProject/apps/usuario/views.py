@@ -40,3 +40,9 @@ def listarusrasync(request):
 
     lista = osql.listarJSONWeb("exec listarUsuarioTipoPersona")
     return HttpResponse(lista)
+
+def recuperarusr(request):
+    osql = SQL()
+    idusr = request.GET.get("idusr")
+    lista = osql.listarJSONWeb("exec recuperarUsuarioById '{}'".format(idusr))
+    return HttpResponse(lista)
