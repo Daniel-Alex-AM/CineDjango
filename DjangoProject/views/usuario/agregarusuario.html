@@ -17,12 +17,13 @@
 
         <div class="mb-3 mt-3">
             <label class="form-label">ID Usuario</label>
-            <input readonly type="text" class="form-control" id="txtidusuario"  placeholder="ID Usuario">
+            <input readonly type="text" class="form-control" id="txtidusuario" placeholder="ID Usuario">
         </div>
 
         <div class="mb-3 mt-3">
             <label class="form-label">Nombre usuario</label>
-            <input type="text" class="form-control" id="txtnombreusuario" data-campo="Nombre Usuario" placeholder="Nombre Usuario">
+            <input type="text" class="form-control" id="txtnombreusuario" data-campo="Nombre Usuario"
+                placeholder="Nombre Usuario">
             <div id="divtxtnombreusuario"></div>
         </div>
 
@@ -37,10 +38,11 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="txtnombretipousuario" placeholder="Tipo de usuario" readonly
                     aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-primary" type="button">Buscar</button>
+                <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" onclick="abrirModal('TipoUsuario')">Buscar</button>
             </div>
             <div id="divtxtnombretipousuario"></div>
-            
+
         </div>
 
         <div class="mb-3 mt-3">
@@ -49,7 +51,8 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="txtnombrepersona" placeholder="Persona" readonly
                     aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-primary" type="button">Buscar</button>
+                <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" onclick="abrirModal('Persona')">Buscar</button>
             </div>
             <div id="divtxtnombrepersona"></div>
 
@@ -58,8 +61,7 @@
 
 
         <div class="mb-3 mt-3">
-            <input type="button" class="btn btn-success" value="Guardar"
-                onclick="guardarDatos()">
+            <input type="button" class="btn btn-success" value="Guardar" onclick="guardarDatos()">
 
             <a class="btn btn-danger" href="/usuario/listar/">Regresar</a>
 
@@ -67,6 +69,38 @@
 
     </div>
 
+    <!----------- POPUP -------------------------------------------------------->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                </div>
+                <div class="modal-body">
+
+                    <div id="divmodalTabla"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button onclick="cerrarModal()" id="bntCerrarModal" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button onclick="guardarDatos()" type="button" class="btn btn-primary">Guardar</button>
+                </div>
+
+                <div id="divErrores"></div>
+
+            </div>
+        </div>
+
+
+
+
+    </div>
     {% include 'scripts.html' %}
     <script type="text/javascript" src="{% static 'js/addusuario.js' %}"></script>
 </body>
