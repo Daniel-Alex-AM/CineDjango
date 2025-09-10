@@ -237,3 +237,12 @@ Doble click elemento HTML
 
 ondblclick="funcion()"
 
+======================================================================
+Para CIFRAR una contraseña en python
+
+import hashlib
+
+password = "123456" #string
+pwdcifrada = hashlib.sha256(passwod.encode()).hexdigest()
+
+

@@ -8,5 +8,5 @@ urlpatterns = [
     path("agregarpersona/", views.agregarpersona), #muestra pagina/formulario
     path("guardarpersona/", views.guardarpersona),
     path("editarpersona/", views.editarpersona),
-    
+    path("listarPersonaAsyncSinUser/", views.listarPersonaAsyncSinUser),    
 ]

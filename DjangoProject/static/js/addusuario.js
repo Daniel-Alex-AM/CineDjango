@@ -1,5 +1,23 @@
 function guardarDatos() {
     var resultado = validarObligatorios(".form-usuario .form-control", ["txtidusuario"], true)
+
+    if(resultado.exito == false) {
+        confirmarAlert('¿Agregar usuario?', function(data) {
+
+            objeto = {
+                'idusuario': get('txtidusuario'),
+                'username': get('txtnombreusuario'),
+                'passwod': get('txtpwduser'),
+                'tipousuario': get('tipousrhidden'),
+                'idpersona': get('personahidden'),
+            }
+
+            fetchPost('/usuario/guardarusuario/', objeto, function(data){
+                //si se actualizo todo ok
+                window.location.href="/usuario/listar/"
+            })
+        })
+    }
 }
 
 function abrirModal(nombre) {
@@ -8,7 +26,7 @@ function abrirModal(nombre) {
         pintar('/usuario/listartipousuario/', "divmodalTabla", undefined, false, false, "IIDTIPOUSUARIO", false, undefined, true, "NOMBRE")
     } else {
         setinner("exampleModalLabel", "Buscar o Seleccionar Persona")
-        pintar('/persona/listarPersonaAsync/', "divmodalTabla", undefined, false, false, "IDPERSONA", false, undefined, true, "NOMBRECOMPLETO")
+        pintar('/persona/listarPersonaAsyncSinUser/', "divmodalTabla", undefined, false, false, "IDPERSONA", false, undefined, true, "NOMBRECOMPLETO")
 
 
     }
@@ -26,7 +44,5 @@ function AsignarValores(id, valor) {
         set("txtnombrepersona", valor)
         set("personahidden", id)
     }
-    alert(titulo)
-    alert(id)
-    alert(valor)
+
 }

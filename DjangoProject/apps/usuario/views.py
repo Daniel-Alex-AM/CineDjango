@@ -2,6 +2,8 @@ from django.shortcuts import render
 from webconfig.query import SQL
 from django.http import HttpResponse
 import json
+import hashlib
+
 # Create your views here.
 
 def listarusuarios(request):
@@ -16,16 +18,19 @@ def listartipousuario(request):
     print(lista)
     return HttpResponse(lista)
 
-def agregarusuario(request):
+def guardarusuario(request):
     osql = SQL()
     objeto = json.loads(request.body.decode('utf-8'))
     idusuario = objeto['idusuario']
     username = objeto['username']
-    passwod = objeto['passwod']
+    passwod = objeto['passwod'] #este es cadena
+    #para cifrar una cadena tiene que ser byte
+    pwdcifrada = hashlib.sha256(passwod.encode()).hexdigest()
+
     tipousuario = objeto['tipousuario']
     idpersona = objeto['idpersona']
     #-- IDUSUARIO, username, passwod, tipousuario, idpersona
     resp = osql.enviarTransaccion("SET NOCOUNT ON;exec guardarUsuario \
-                                  '{}', '{}', '{}', '{}', '{}'".format(idusuario, username,passwod,tipousuario,idpersona))
+                                  '{}', '{}', '{}', '{}', '{}'".format(idusuario, username,pwdcifrada,tipousuario,idpersona))
     
     return HttpResponse(resp)

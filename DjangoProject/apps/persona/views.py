@@ -12,6 +12,12 @@ def listarPersonaAsync(request):
     lista = osql.listarJSON("exec listarPersona")
     return HttpResponse(json.dumps(lista))
 
+def listarPersonaAsyncSinUser(request):
+    osql = SQL()
+    lista = osql.listarJSON("exec listarPersonaSinUser")
+    return HttpResponse(json.dumps(lista))
+
+
 def buscarPersonaAsync(request):
     osql = SQL()
     nombrep = request.GET.get("nombrep")
