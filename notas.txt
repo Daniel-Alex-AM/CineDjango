@@ -246,3 +246,6 @@ password = "123456" #string
 pwdcifrada = hashlib.sha256(passwod.encode()).hexdigest()
 
 
+---------------------------------------------------------------------
+Dividir / Split String en SQL
+
