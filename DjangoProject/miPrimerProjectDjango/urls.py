@@ -35,5 +35,7 @@ urlpatterns = [
     path('usuario/', include('apps.usuario.urls')),
     path('pagtipousr/', include('apps.pagtipousr.urls')),
     path('pagtipousrbtn/', include('apps.pagtipousrbtn.urls')),
+    path('pagina/', include('apps.pagina.urls')),
+    path('tipousuario/', include('apps.tipousuario.urls')),
 
 ]
