@@ -34,3 +34,9 @@ def guardarusuario(request):
                                   '{}', '{}', '{}', '{}', '{}'".format(idusuario, username,pwdcifrada,tipousuario,idpersona))
     
     return HttpResponse(resp)
+
+def listarusrasync(request):
+    osql = SQL()
+
+    lista = osql.listarJSONWeb("exec listarUsuarioTipoPersona")
+    return HttpResponse(lista)

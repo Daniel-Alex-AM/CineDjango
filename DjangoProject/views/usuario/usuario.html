@@ -14,8 +14,102 @@
     {%include 'menu.html'%}
     <h1>Usuarios</h1>
 
+
     <div class="mb-3 container mt-3">
         <a class="btn btn-secondary" href="/usuario/agregarusuario/">Nuevo</a>
+
+        <div id="divTabla" class="mt-4"></div>
+
+    </div>
+
+
+    <!-- MODAL POPUP-->
+    <div class="modal fade form-usuario" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+
+
+                </div>
+
+                <div class="modal-body">
+
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="" class="form-label">ID Usuario</label>
+                        <input readonly class="form-control" type="text" name="" id="txtidusuario"
+                            placeholder="ID Usuario">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Nombre Usuario</label>
+                        <input readonly class="form-control" type="text" name="" id="txtnombreusuario"
+                            placeholder="Nombre Usuario">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <p>Tipo usuario</p>
+                        <div class="input-group">
+
+                            <input type="hidden" id="tipousrhidden">
+
+                            <input type="text" class="form-control" id="txtnombretipousuario"
+                                placeholder="Tipo de usuario" readonly aria-label="Recipient's username"
+                                aria-describedby="button-addon2">
+                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalTipoUser"
+                                onclick="abrirModal('TipoUsuario')">Buscar</button>
+                        </div>
+                        <div id="divtxtnombretipousuario"></div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button onclick="cerrarModal()" id="bntCerrarModal" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button onclick="guardarDatos()" type="button" class="btn btn-primary">Guardar</button>
+                </div>
+
+                <div id="divErrores"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!----------- POPUP / MODAL -------------------------------------------------------->
+    <div class="modal fade" id="exampleModalTipoUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelTipoUsr"></h5>
+
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> -->
+                </div>
+                <div class="modal-body">
+
+                    <div id="divmodalTablaTipoUsr"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button onclick="cerrarModal()" id="bntCerrarModalTipoUsr" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button onclick="guardarDatos()" type="button" class="btn btn-primary">Guardar</button>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
     </div>
 
     {% include 'scripts.html' %}

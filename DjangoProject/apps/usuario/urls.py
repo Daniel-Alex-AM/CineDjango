@@ -6,5 +6,7 @@ urlpatterns = [
     path("agregarusuario/", views.agregarusuario),
     path("listartipousuario/", views.listartipousuario),
     path("guardarusuario/", views.guardarusuario),
+    path("listarusrasync/", views.listarusrasync),
+
     
 ]
