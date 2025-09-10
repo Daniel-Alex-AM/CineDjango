@@ -59,3 +59,11 @@ def eliminarfuncion(request):
     resp = osql.enviarPost("exec eliminarFuncion '{}'".format(idfunc))
 
     return HttpResponse(resp)
+
+def buscarfuncionporcine(request):
+    osql = SQL()
+
+    idcine = request.GET.get("idcine")
+    lista = osql.listarJSONWeb("exec buscarFuncionPorCine '{}'".format(idcine))
+    print(lista)
+    return HttpResponse(lista)

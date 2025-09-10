@@ -12,20 +12,73 @@
 <body>
 
     {% include 'menu.html' %}
+
+    <div class="input-group mb-3 container mt-3">
+        
+        <input type="hidden" id="idcine">
+
+        <input type="text" class="form-control" placeholder="Ingrese nombre cine" aria-label="Recipient's username"
+            aria-describedby="button-addon2" id="txtnombrecine">
+        
+            <button class="btn btn-outline-primary"
+                onclick="abrirModalBuscar()"
+                type="button"
+                id="button-select"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                >Seleccione</button>
+
+        <button class="btn btn-outline-primary"
+                onclick="cleanButaca()"
+                type="button"
+                id="button-clean"
+                >Limpiar</button>
+        
+
+    </div>
+
     <div class="container mt-3">
 
         <div class="input-group mb-3">
 
             <label>Butacas</label>
-            <!--
-            <select id="cboPeliculaBuscar" class="form-control" onchange="filtrarFuncionxPelicula()"></select>
-            -->
-
         </div>
 
 
         <div class="container mt-3">
             <div id="divTabla"></div>
+
+        </div>
+
+<!-------------------------------MODAL---------------------------------------->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div id="divTablaSubpopup"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="cerrarModal()" id="bntCerrarModal" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button onclick="guardarDatos()" type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+
+                    <div id="divErrores"></div>
+
+                </div>
+            </div>
+
+
+
 
         </div>
 

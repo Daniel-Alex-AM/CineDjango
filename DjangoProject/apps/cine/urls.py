@@ -9,5 +9,7 @@ urlpatterns = [
     path('guardarcine/', views.guardarcine),
     path('recuperarcine/', views.recuperarcine),
     path('eliminarcine/', views.eliminarcine),
+    path('eliminarcine/', views.eliminarcine),
+
 
 ]

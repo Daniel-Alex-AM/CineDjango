@@ -9,4 +9,6 @@ urlpatterns = [
     path("buscarsalas/", views.buscarsalas),
     path("recuperarfuncion/", views.recuperarfuncion),
     path("eliminarfuncion/", views.eliminarfuncion),
+    path("buscarfuncionporcine/", views.buscarfuncionporcine),
+
 ]

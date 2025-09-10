@@ -117,7 +117,7 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             contenido += "</tbody>"
             contenido += "</table>"
             document.getElementById(idDiv).innerHTML = contenido
-            $("#tabla").DataTable();
+            $("#"+idtabla).DataTable();
 
         })
 }
