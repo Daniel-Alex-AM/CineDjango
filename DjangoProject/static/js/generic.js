@@ -153,10 +153,13 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             document.getElementById(idDiv).innerHTML = contenido
             $("#" + idtabla).DataTable();
 
-        }) //aqui termina de hacer todo lo anterior
-        if (isCallback==true) {
-            callback() //ejecuta esta funcion callback despues de terminar lo anterior
-        }
+
+            if (isCallback == true) {
+                callback() //ejecuta esta funcion callback despues de terminar lo anterior
+            }
+
+        })
+        
 }
 
 

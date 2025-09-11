@@ -981,6 +981,7 @@ as
 begin
 	declare @idgeneradonewtipousr int
 	declare @idpagina int
+	declare @cantidad int
 
 	begin transaction
 		begin try
@@ -992,7 +993,7 @@ begin
 
 				declare Tabla cursor for select * from splitstringcustom(@opciones,'*')
 				OPEN Tabla
-				-- RECORRER REGISTRO POR REGISTRO (en buble)
+				-- RECORRER REGISTRO POR REGISTRO (en bucle)
 				FETCH NEXT FROM Tabla into @idpagina
 				WHILE @@FETCH_STATUS=0
 					BEGIN
@@ -1008,8 +1009,38 @@ begin
 				UPDATE TIPOUSUARIO
 				SET NOMBRE=@nombretipousr, DESCRIPCION=@descripcion
 				WHERE IIDTIPOUSUARIO = @idtipousr
-			END
+				--Deshabilitar todos los items asociados al paginatipousr
+				UPDATE PAGINATIPOUSUARIO
+				SET BHABILITADO=0
+				WHERE IIDTIPOUSUARIO = @idtipousr				
 
+				declare Tabla cursor for select * from splitstringcustom(@opciones,'*')
+				OPEN Tabla
+				-- RECORRER REGISTRO POR REGISTRO (en bucle)
+				FETCH NEXT FROM Tabla into @idpagina
+				WHILE @@FETCH_STATUS=0
+					BEGIN
+
+						select @cantidad = count(*)
+						from PAGINATIPOUSUARIO
+						where @idtipousr = IIDTIPOUSUARIO AND IIDPAGINA = @idpagina
+
+						if @cantidad=0
+						BEGIN
+							INSERT INTO PAGINATIPOUSUARIO(IIDTIPOUSUARIO, IIDPAGINA, BHABILITADO)
+							VALUES(@idtipousr, @idpagina, 1)
+						END
+
+						ELSE
+						BEGIN
+							UPDATE PAGINATIPOUSUARIO
+							SET BHABILITADO=1
+							WHERE IIDTIPOUSUARIO=@idtipousr and IIDPAGINA = @idpagina
+						END
+
+						FETCH NEXT FROM Tabla into @idpagina
+					END
+			END
 
 			COMMIT TRANSACTION
 			SELECT 1

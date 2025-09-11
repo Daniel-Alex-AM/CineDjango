@@ -57,8 +57,9 @@ function guardarDatos() {
 
             fetchPost('/tipousuario/guardartipousr/', objeto, function (data) {
                 //si se actualizo todo ok
-                success()
                 window.location.href = "/tipousuario/listar/"
+                success()
+
             })
         })
     }
