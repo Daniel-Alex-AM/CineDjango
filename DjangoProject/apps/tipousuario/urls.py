@@ -7,4 +7,6 @@ urlpatterns = [
     path("agregar/", views.agregar),
     path("guardartipousr/", views.guardartipousr),
     path("editartipousr/", views.editartipousr),
+    path("recuperartipousr/", views.recuperartipousr),
+    path("recuperardetalletipousr/", views.recuperardetalletipousr),
 ]

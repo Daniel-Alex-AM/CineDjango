@@ -1025,3 +1025,25 @@ end
 EXEC guardarTipoUsuario 0, 'Jefe', 'El Jefe', '1*2*3'
 EXEC guardarTipoUsuario 4, 'ELJefe', 'El Jefe Jefe', '1*2*3'
 select * from tipousuario
+
+-------------------------------------
+
+create procedure recuperarTipoUsr
+@idtipousr int
+as
+begin
+
+	SELECT IIDTIPOUSUARIO, NOMBRE, DESCRIPCION
+	FROM TIPOUSUARIO
+	WHERE IIDTIPOUSUARIO = @idtipousr
+end
+
+CREATE PROCEDURE recuperarPaginasByTipoUsr
+@idtipousr int
+as
+begin
+	SELECT IIDPAGINA
+	FROM PAGINATIPOUSUARIO
+	WHERE IIDTIPOUSUARIO = @idtipousr AND BHABILITADO=1
+end
+

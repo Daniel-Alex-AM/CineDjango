@@ -30,3 +30,15 @@ def guardartipousr(request):
 def editartipousr(request):
     idtipousr = request.GET.get("idtipousr")
     return render(request,'tipousuario/editartipousr.html', {"idtipousr": idtipousr})
+
+def recuperartipousr(request):
+    osql = SQL()
+    idtipousr = request.GET.get("idtipousr")
+    lista = osql.listarJSONWeb("exec recuperarTipoUsr '{}'".format(idtipousr))
+    return HttpResponse(lista)
+
+def recuperardetalletipousr(request):
+    osql = SQL()
+    idtipousr = request.GET.get("idtipousr")
+    lista = osql.listarJSONWeb("exec recuperarPaginasByTipoUsr '{}'".format(idtipousr))
+    return HttpResponse(lista)

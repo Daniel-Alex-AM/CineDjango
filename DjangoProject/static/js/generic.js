@@ -30,7 +30,8 @@ var cabecerasJSON;
 function pintar(url, idDiv = "divTabla", idtabla = "tabla",
     opcionEdit = false, opcionElimina = false, propID = "Id",
     popup = false, titulos = [],
-    subpopup = false, propDisplay, addChecks = false) {
+    subpopup = false, propDisplay, addChecks = false,
+    isCallback=false, callback) {
 
     fetch(url).then(res => res.json())
         .then(res => {
@@ -152,7 +153,10 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             document.getElementById(idDiv).innerHTML = contenido
             $("#" + idtabla).DataTable();
 
-        })
+        }) //aqui termina de hacer todo lo anterior
+        if (isCallback==true) {
+            callback() //ejecuta esta funcion callback despues de terminar lo anterior
+        }
 }
 
 
