@@ -42,3 +42,9 @@ def recuperardetalletipousr(request):
     idtipousr = request.GET.get("idtipousr")
     lista = osql.listarJSONWeb("exec recuperarPaginasByTipoUsr '{}'".format(idtipousr))
     return HttpResponse(lista)
+
+def filtrartipousrbyname(request):
+    osql = SQL()
+    nombretipousr = request.GET.get("nombretipousr")
+    lista = osql.listarJSONWeb("exec filtrarTipoUsrByName '{}'".format(nombretipousr))
+    return HttpResponse(lista)

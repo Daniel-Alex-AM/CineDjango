@@ -1078,3 +1078,66 @@ begin
 	WHERE IIDTIPOUSUARIO = @idtipousr AND BHABILITADO=1
 end
 
+-------------------------------------------------------
+
+create procedure filtrarTipoUsrByName
+@nombre varchar(100)
+as
+begin
+declare @cadena varchar(100)
+set @cadena = ltrim(rtrim(@nombre)) -- eliminar espacios el inicio y final.
+IF @cadena=''
+begin
+	exec listarTipoUsuario
+end
+else
+begin
+	SELECT IIDTIPOUSUARIO, NOMBRE
+	FROM TIPOUSUARIO
+	WHERE BHABILITADO=1 AND NOMBRE LIKE CONCAT('%', UPPER(@cadena),'%')
+end
+end
+
+
+create procedure eliminarTipoUsuario
+@idtipousr int
+as
+begin
+
+	UPDATE TIPOUSUARIO
+	SET BHABILITADO=0
+	WHERE IIDTIPOUSUARIO = @idtipousr
+end
+
+
+select * from TIPOUSUARIO
+
+EXEC eliminarTipoUsuario 4
+EXEC listarTipoUsuario
+exec filtrarTipoUsrByName 'a'
+
+create procedure listarPagTipoUsr
+as
+begin
+
+select p.IIDPAGINATIPOUSUARIO, tu.NOMBRE, pag.MENSAJE
+from PAGINATIPOUSUARIO p INNER JOIN TIPOUSUARIO tu ON p.IIDTIPOUSUARIO = tu.IIDTIPOUSUARIO
+INNER JOIN PAGINA pag ON p.IIDPAGINA = pag.IIDPAGINA
+WHERE p.BHABILITADO=1 AND tu.BHABILITADO = 1 AND pag.BHABILITADO = 1
+end
+
+
+
+create procedure filtrarPagTipoUsr
+@idtipousr int
+as
+begin
+
+select p.IIDPAGINATIPOUSUARIO, tu.NOMBRE, pag.MENSAJE
+from PAGINATIPOUSUARIO p INNER JOIN TIPOUSUARIO tu ON p.IIDTIPOUSUARIO = tu.IIDTIPOUSUARIO
+INNER JOIN PAGINA pag ON p.IIDPAGINA = pag.IIDPAGINA
+WHERE p.BHABILITADO=1 AND tu.BHABILITADO = 1 AND pag.BHABILITADO = 1 AND p.IIDTIPOUSUARIO = @idtipousr
+end
+
+
+select * from PAGINATIPOUSUARIO

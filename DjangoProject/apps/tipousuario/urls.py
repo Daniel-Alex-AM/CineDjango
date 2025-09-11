@@ -9,4 +9,7 @@ urlpatterns = [
     path("editartipousr/", views.editartipousr),
     path("recuperartipousr/", views.recuperartipousr),
     path("recuperardetalletipousr/", views.recuperardetalletipousr),
+    path("filtrartipousrbyname/", views.filtrartipousrbyname),
+
+
 ]
