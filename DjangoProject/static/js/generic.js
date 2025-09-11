@@ -23,7 +23,7 @@ function obtenerChecksSeleccionados() {
     }
 
     var checklist = contenido.join("*")
-    alert(checklist)
+    return checklist
 }
 
 var cabecerasJSON;

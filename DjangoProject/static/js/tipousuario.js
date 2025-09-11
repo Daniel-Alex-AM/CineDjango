@@ -4,5 +4,10 @@ window.onload = function() {
 
 
 function listar() {
-    pintar('/tipousuario/listarasync/', undefined, undefined, true, true,"IIDTIPOUSUARIO",false,undefined,false,false)
+    pintar('/tipousuario/listarasync/', undefined, undefined, 
+        true, true,"IIDTIPOUSUARIO",false,undefined,false,false)
+}
+
+function Editar(id) {
+    window.location.href = "/tipousuario/editartipousr/?idtipousr="+id
 }
