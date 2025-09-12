@@ -6,3 +6,11 @@ def listarasync(request):
     osql = SQL()
     lista = osql.listarJSONWeb("exec listarPaginas")
     return HttpResponse(lista)
+
+def verpagina(request):
+    return render(request,'pagina/pagina.html', None)
+
+def listarpagina(request):
+    osql = SQL()
+    lista = osql.listarJSONWeb("exec listarPaginasBD")
+    return HttpResponse(lista)

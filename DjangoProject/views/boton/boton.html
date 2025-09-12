@@ -6,24 +6,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina</title>
+    <title>Boton</title>
     {% include 'estilos.html' %}
 </head>
 
 <body>
     {% include 'menu.html' %}
 
-    <div class="container mt-3">
 
-        <button class="btn btn-success" onclick="agregarFila('tabla')">Agregar</button>
-
+    <div class="container">
         <div id="divTabla"></div>
 
+        <button class="btn btn-success" onclick="agregarFila('tabla')">Agregar</button>
     </div>
-
-
     {% include 'scripts.html' %}
-    <script type="text/javascript" src="{% static 'js/pagina.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/boton.js' %}"></script>
 
 </body>
 

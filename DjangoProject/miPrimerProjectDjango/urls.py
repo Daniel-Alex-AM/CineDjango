@@ -21,6 +21,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.login),
+    path('login/', views.login),
     path('inicio/', views.saludo),
     path('curso/', views.curso),
     path('mpp/', views.MiPrimeraPagina),
@@ -37,5 +39,7 @@ urlpatterns = [
     path('pagtipousrbtn/', include('apps.pagtipousrbtn.urls')),
     path('pagina/', include('apps.pagina.urls')),
     path('tipousuario/', include('apps.tipousuario.urls')),
+    path('boton/', include('apps.boton.urls')),
+    path('paginaprincipal/', include('apps.paginaprincipal.urls')),
 
 ]

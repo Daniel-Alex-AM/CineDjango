@@ -46,3 +46,33 @@ def recuperarusr(request):
     idusr = request.GET.get("idusr")
     lista = osql.listarJSONWeb("exec recuperarUsuarioById '{}'".format(idusr))
     return HttpResponse(lista)
+
+
+def login(request):
+    osql = SQL()
+    objeto = json.loads(request.body.decode('utf-8'))
+    username = objeto['username']
+    passwod = objeto['passwod'] #este es cadena
+     #para cifrar una cadena tiene que ser byte
+    pwdcifrada = hashlib.sha256(passwod.encode()).hexdigest()
+
+    resp = osql.listarJSON("exec uspLogin '{}', '{}'".format(username, pwdcifrada))
+    data = resp[0]
+    cantidad = data['CANTIDAD']
+
+    if cantidad == 1:
+        listausr = osql.listarJSON("exec obtenerIdUsuario '{}', '{}'".format(username, pwdcifrada))
+        dictusr = listausr[0]
+
+        idusr = dictusr['IDUSUARIO']
+
+        request.session["idusuario"] = idusr
+
+        idtipousr = dictusr['IDTIPOUSUARIO']
+        request.session["idtipousr"] = idtipousr
+
+        
+        print(dictusr)
+        return HttpResponse(idusr)
+
+    return HttpResponse(cantidad)

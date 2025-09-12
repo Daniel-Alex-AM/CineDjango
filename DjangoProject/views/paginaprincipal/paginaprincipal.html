@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    {% include "estilos.html" %}
+    <title>PRINCIPAL</title>
+    <meta charset="UTF-8">
+    <meta name="title" content="Título de la WEB">
+    <meta name="description" content="Descripción de la WEB">
+    <style>
+       
+    </style>
+</head>
+
+<body>
+{% include 'menu.html' %}
+
+<h1>PAGINA PRINCIPAL</h1>
+
+   <input type="text" value="{{id}}">
+
+    {% include 'scripts.html' %}
+    <script type="text/javascript" src="{% static 'js/paginaprincipal.js' %}"></script>
+
+</body>
+
+</html>

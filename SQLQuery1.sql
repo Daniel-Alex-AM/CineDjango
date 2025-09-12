@@ -1047,6 +1047,7 @@ begin
 		end try
 
 		begin catch
+			ROLLBACK TRANSACTION
 			select 0
 		end catch
 
@@ -1080,7 +1081,7 @@ end
 
 -------------------------------------------------------
 
-create procedure filtrarTipoUsrByName
+ALTER procedure filtrarTipoUsrByName
 @nombre varchar(100)
 as
 begin
@@ -1088,11 +1089,11 @@ declare @cadena varchar(100)
 set @cadena = ltrim(rtrim(@nombre)) -- eliminar espacios el inicio y final.
 IF @cadena=''
 begin
-	exec listarTipoUsuario
+	exec listarTipoUsuarioBD
 end
 else
 begin
-	SELECT IIDTIPOUSUARIO, NOMBRE
+	SELECT IIDTIPOUSUARIO, NOMBRE, DESCRIPCION
 	FROM TIPOUSUARIO
 	WHERE BHABILITADO=1 AND NOMBRE LIKE CONCAT('%', UPPER(@cadena),'%')
 end
@@ -1141,3 +1142,208 @@ end
 
 
 select * from PAGINATIPOUSUARIO
+
+/******************************************************************/
+create procedure listarBotones
+as
+begin
+	SELECT IIDBOTON, NOMBRE
+	FROM BOTON
+	WHERE BHABILITADO=1
+end
+
+
+create procedure recuperarPagBtnTipoUsr
+@idpagtipousr int
+as
+begin
+
+SELECT IIDBOTON
+FROM PAGINATIPOUSUARIOBOTON
+WHERE IIDPAGINATIPOUSUARIO = @idpagtipousr and BHABILITADO = 1
+
+end
+
+----------------------------------------------------
+alter procedure guardarBtnsPagTipoUsr
+@opciones varchar(100),
+@idtipousr INT
+as
+begin
+	declare @idbtn int
+	declare @cantidad int
+
+	begin transaction
+		begin try
+
+			--Deshabilitar todos los items asociados
+			UPDATE PAGINATIPOUSUARIOBOTON
+			SET BHABILITADO=0
+			WHERE IIDPAGINATIPOUSUARIO = @idtipousr
+
+			declare Tabla cursor for select * from splitstringcustom(@opciones,'*')
+				OPEN Tabla
+				-- RECORRER REGISTRO POR REGISTRO (en bucle)
+				FETCH NEXT FROM Tabla into @idbtn
+				WHILE @@FETCH_STATUS=0
+					BEGIN
+						IF @idbtn <> '' --TAL VEZ la opcion fue ''
+						BEGIN
+							select @cantidad = count(*)
+							from PAGINATIPOUSUARIOBOTON
+							where @idtipousr = IIDPAGINATIPOUSUARIO AND IIDBOTON = @idbtn
+
+							if @cantidad=0
+							BEGIN
+								INSERT INTO PAGINATIPOUSUARIOBOTON(IIDPAGINATIPOUSUARIO, IIDBOTON, BHABILITADO)
+								VALUES(@idtipousr, @idbtn, 1)
+							END
+
+							ELSE
+							BEGIN
+								UPDATE PAGINATIPOUSUARIOBOTON
+								SET BHABILITADO=1
+								WHERE @idtipousr = IIDPAGINATIPOUSUARIO AND IIDBOTON = @idbtn
+							END
+
+						END
+
+						FETCH NEXT FROM Tabla into @idbtn
+					END
+
+			COMMIT TRANSACTION
+			select 1
+		end try
+
+		begin catch
+			ROLLBACK TRANSACTION
+			select 0
+		end catch
+end
+
+exec guardarBtnsPagTipoUsr '', 14
+
+
+INSERT INTO PAGINATIPOUSUARIOBOTON(IIDPAGINATIPOUSUARIO, IIDBOTON, BHABILITADO)
+							VALUES(14, 0, 1)
+
+select * from PAGINATIPOUSUARIOBOTON
+
+SELECT * FROM BOTON
+
+select * from splitstringcustom('','*')
+
+
+----------------------------------------
+create procedure listarPaginasBD
+AS
+BEGIN
+	SELECT IIDPAGINA, MENSAJE, FUNCION, NOMBREAPLICACION
+	FROM PAGINA
+	WHERE BHABILITADO=1
+END
+
+create procedure listarBtnBD
+AS
+BEGIN
+	SELECT IIDBOTON, NOMBRE, DESCRIPCION
+	FROM BOTON
+	WHERE BHABILITADO=1
+END
+exec listarBtnBD
+--------------------------------------
+
+create procedure guardarPagina
+@idpagina int,
+@mensaje varchar(100),
+@funcion varchar(100),
+@nombreaplicacion varchar(100)
+as
+begin
+
+	if @idpagina=''
+	begin
+		insert into PAGINA(MENSAJE,FUNCION,NOMBREAPLICACION,BHABILITADO)
+		VALUES(@mensaje, @funcion, @nombreaplicacion,1)
+
+	end
+
+	ELSE
+	BEGIN
+		UPDATE PAGINA
+		SET MENSAJE=@mensaje, FUNCION=@funcion, @NOMBREAPLICACION=@nombreaplicacion
+		WHERE @idpagina = IIDPAGINA
+	END
+
+end
+
+
+
+create procedure guardarBoton
+@idboton int,
+@nombre varchar(100),
+@descripcion varchar(200)
+
+as
+begin
+if @idboton=''
+	begin
+		insert into BOTON(NOMBRE,DESCRIPCION,BHABILITADO)
+		VALUES(@nombre, @descripcion, 1)
+
+	end
+
+	ELSE
+	BEGIN
+		UPDATE BOTON
+		SET NOMBRE=@nombre, DESCRIPCION=@descripcion
+		WHERE @idboton = IIDBOTON
+	END
+end
+
+-------------------------------------------------------
+-- LOGIN
+-------------------------------------------------------
+ALTER PROCEDURE uspLogin
+@username varchar(100),
+@pwd varchar(100)
+as
+begin
+	select count(*) as CANTIDAD
+	from USUARIO
+	WHERE NOMBREUSUARIO=@username and @pwd=CONTRA --UPPER(char)=UPPER(COLUMNA)
+
+end
+
+
+CREATE PROCEDURE obtenerIdUsuario
+@username varchar(100),
+@pwd varchar(100)
+as
+begin
+	select IDUSUARIO, IDTIPOUSUARIO
+	from USUARIO
+	WHERE NOMBREUSUARIO=@username and @pwd=CONTRA --UPPER(char)=UPPER(COLUMNA)
+end
+
+
+CREATE PROCEDURE listarMenus
+@idtipousr int
+as
+begin
+	SELECT pa.IIDPAGINA, pa.MENSAJE, pa.FUNCION, pa.NOMBREAPLICACION
+	FROM PAGINATIPOUSUARIO p INNER JOIN PAGINA pa ON p.IIDPAGINA = pa.IIDPAGINA
+	WHERE p.IIDTIPOUSUARIO=@idtipousr AND p.BHABILITADO=1
+end
+
+select * from PAGINATIPOUSUARIO
+
+---- OBTENER BOTONES SEGUN PAGINA
+CREATE PROCEDURE listarBotonesPagina
+@idpagtipousr int
+as
+begin
+	SELECT IIDBOTON
+	FROM PAGINATIPOUSUARIOBOTON
+	WHERE IIDPAGINATIPOUSUARIOBOTON=@idpagtipousr
+end

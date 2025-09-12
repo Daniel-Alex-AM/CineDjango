@@ -247,5 +247,49 @@ pwdcifrada = hashlib.sha256(passwod.encode()).hexdigest()
 
 
 ---------------------------------------------------------------------
-Dividir / Split String en SQL
+Agregar elemento HTML dentro de otro 
 
+EL método insertAdjacentHTML() de la interfaz Element analiza la cadena de texto introducida como cadena HTML o XML e inserta al árbol DOM los nodos resultantes de dicho análisis en la posición especificada. Este método no re-analiza el elemento sobre el cual se está invocando y por lo tanto no corrompe los elementos ya existentes dentro de dicho elemento. Esto evita el paso adicional de la serialización, haciéndolo mucho más rápido que la manipulación directa con innerHTML.
+
+
+Parámetros
+posición
+Un DOMString que representa la posición relativa al elemento, y deberá ser una de las siguientes cadenas:
+
+'beforebegin': Antes que el propio elemento.
+'afterbegin': Justo dentro del elemento, antes de su primer elemento hijo.
+'beforeend': Justo dentro del elemento, después de su último elemento hijo.
+'afterend': Después del propio elemento.
+texto
+Es la cadena a ser analizada como HTML o XML e insertada en el árbol.
+
+Visualizacion de las posiciones
+<!-- beforebegin -->
+<p>
+  <!-- afterbegin -->
+  foo
+  <!-- beforeend -->
+</p>
+<!-- afterend -->
+
+----------------------------------------------------------------------------
+
+Sesiones en Django
+https://docs.djangoproject.com/en/5.2/topics/http/sessions/
+
+    Using cookie-based sessions
+    To use cookies-based sessions, set the SESSION_ENGINE setting to "django.contrib.sessions.backends.signed_cookies". The session data will be stored using Django’s tools for cryptographic signing and the SECRET_KEY setting.
+
+    IR A PROYECTO PADRE 
+        settings.py 
+        AGREGAR 
+            SESSION_ENGINE = django.contrib.sessions.backends.signed_cookies
+
+
+    el objeto request tiene session para guardar valores durante la sesion
+    Ejemplo
+        request.session["idusuario"] = idusr
+
+USUARIO PRUEBA
+AlexAM
+12345678

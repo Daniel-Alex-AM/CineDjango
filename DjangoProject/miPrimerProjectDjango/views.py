@@ -9,3 +9,6 @@ def curso(request):
 
 def MiPrimeraPagina(request):
     return render(request,"inicio.html", None)
+
+def login(request):
+    return render(request,"login/login.html", None)

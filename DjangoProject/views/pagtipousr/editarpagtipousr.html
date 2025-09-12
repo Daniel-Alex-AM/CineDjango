@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Tipo Usuario</title>
+    {% include 'estilos.html' %}
+</head>
+
+<body>
+    {% include 'menu.html' %}
+
+    <input type="hidden" id="txtidpagtipousr" value="{{id}}">
+
+
+    <div class="container">
+
+        <div id="divTabla"></div>
+
+
+        <div class="container">
+            {% csrf_token %}
+
+           
+            <div class="mb-3 mt-3">
+                <input type="button" class="btn btn-success" value="Guardar" onclick="guardarDatos()">
+                <input type="button" class="btn btn-success" value="CheckBox" onclick="obtenerChecksSeleccionados()">
+
+                <a class="btn btn-danger" href="/pagtipousr/pagtipousrhtml/">Regresar</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% include 'scripts.html' %}
+    <script type="text/javascript" src="{% static 'js/editpagtipousr.js' %}"></script>
+
+</body>
+
+</html>

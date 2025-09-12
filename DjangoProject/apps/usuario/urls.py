@@ -8,6 +8,7 @@ urlpatterns = [
     path("guardarusuario/", views.guardarusuario),
     path("listarusrasync/", views.listarusrasync),
     path("recuperarusr/", views.recuperarusr),
+    path("login/", views.login),
 
     
 ]

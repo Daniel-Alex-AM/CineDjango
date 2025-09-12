@@ -13,8 +13,17 @@
 <body>
     {% include 'menu.html' %}
 
+   
+
     <div class="mb-3 container mt-3">
     
+        <div class="input-group mb-3 container mt-3">
+        
+            <input type="text" class="form-control" placeholder="Ingrese Tipo Usuario" aria-label="Recipient's username"
+                aria-describedby="button-addon2" id="txtnombretipousuario" onkeyup="buscarTipoUsuario()">
+        </div>
+
+
         <div id="divTabla" class="mt-4"></div>
         
         <a class="btn btn-secondary" href="/tipousuario/agregar/">Nuevo</a>

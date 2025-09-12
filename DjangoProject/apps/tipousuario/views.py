@@ -48,3 +48,9 @@ def filtrartipousrbyname(request):
     nombretipousr = request.GET.get("nombretipousr")
     lista = osql.listarJSONWeb("exec filtrarTipoUsrByName '{}'".format(nombretipousr))
     return HttpResponse(lista)
+
+def eliminartipousr(request):
+    osql = SQL()
+    idtipousr = request.GET.get("idtipousr")
+    resp = osql.enviarPost("exec eliminarTipoUsuario '{}'".format(idtipousr))
+    return HttpResponse(resp)

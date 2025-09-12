@@ -26,15 +26,116 @@ function obtenerChecksSeleccionados() {
     return checklist
 }
 
+
+function clickcelda(obj) {
+    var valor = obj.getAttribute("data-valor") //valor original
+    obj.innerHTML = ""
+    obj.insertAdjacentHTML("beforeend", `
+            <input type='text' class='form form-control' value='${valor}' />
+        `)
+
+    var trfila = obj.parentNode //recupera etiqueta padre (tr en este ejemplo)
+    var ultimotdhijo = trfila.lastChild
+
+    if (ultimotdhijo.childNodes.length == 0) {
+
+        ultimotdhijo.insertAdjacentHTML("beforeend", `
+            <button onclick='Cargar(GuardarElems(this))' class='btn btn-success'>Guardar</button>
+            <button onclick='Cancelar(this)' class='btn btn-danger'>Cancelar</button>
+        `)
+    }
+
+}
+
+function GuardarElems(btn) {
+    var tractual = btn.parentNode.parentNode
+    var nhijos = tractual.children.length
+    var valores = []
+    var tdactual
+
+    for (var i = 0; i < nhijos - 1; i++) {
+        tdactual = tractual.children[i]
+        if (tdactual.children.length > 0) {
+            if (tdactual.children[0].nodeName == "INPUT") {
+                valores.push(tdactual.children[0].value)
+            }
+        } else {
+            valores.push(tdactual.getAttribute("data-valor")
+            )
+        }
+    }
+
+    return valores
+}
+
+function Cancelar(btn) {
+    var tdactual = btn.parentNode
+    var tractual = tdactual.parentNode
+    var hijosTr = tractual.children.length
+    for (var i = 0; i < hijosTr - 1; i++) {
+        tdObjeto = tractual.children[i] //hijos del TR
+        tdObjeto.innerHTML = tdObjeto.getAttribute("data-valor")
+    }
+
+    tractual.children[hijosTr - 1].innerHTML = ""
+
+}
+
+function agregarFila(idtabla) {
+    //hijos tabla
+    //0 - colgroup
+    // 1 - thead
+    // 2 - tbody
+    var tabla = document.getElementById(idtabla)
+    var objthead = tabla.children[1]
+    var objtr = objthead.children[0]
+    var hijosTr = objtr.children.length //columnas
+
+    var objtbody = tabla.children[2]
+    var nFilas = objtbody.children.length
+    var ultimoTr = objtbody.children[nFilas - 1]
+
+    //pintar fila
+    if (ultimoTr.children[0].getAttribute("data-valor") != "") {
+        var contenido = "<tr>"
+        for (var i = 0; i < hijosTr - 1; i++) { //recorrer #columnas excepto ultima porque hay botones ahi
+            contenido += "<td data-valor=''>"
+            contenido += "<input type='text' class='form form-control' />"
+            contenido += "</td>"
+        }
+
+        contenido += `
+            <td>
+            <button onclick='Cargar(GuardarElems(this))' class='btn btn-success'>Guardar</button>
+                <button onclick='CancelarNvaFila(this)' class='btn btn-danger'>Cancelar</button>
+        
+            </td>
+        `
+
+        contenido += "</tr>"
+
+        objtbody.insertAdjacentHTML("beforeend", contenido)
+    }
+}
+
+function CancelarNvaFila(btn) {
+    var tdActual = btn.parentNode
+    var trActual = tdActual.parentNode
+    var padreTr = trActual.parentNode
+
+    padreTr.removeChild(trActual)
+}
+
 var cabecerasJSON;
 function pintar(url, idDiv = "divTabla", idtabla = "tabla",
     opcionEdit = false, opcionElimina = false, propID = "Id",
     popup = false, titulos = [],
     subpopup = false, propDisplay, addChecks = false,
-    isCallback=false, callback) {
+    isCallback = false, callback) {
 
     fetch(url).then(res => res.json())
         .then(res => {
+            enableDobleClickElement = opcionEdit == null && opcionElimina == null
             var contenido = "<table id=" + idtabla + " class='table'>";
             //alert(JSON.stringify(res));
             //alert(Object.keys(res[0]));
@@ -76,7 +177,7 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
                 }
             }
 
-            if (opcionEdit == true || opcionElimina == true || subpopup == true) {
+            if (opcionEdit == true || opcionElimina == true || subpopup == true || enableDobleClickElement) {
                 contenido += "<td>Operaciones</td>"
             }
 
@@ -87,7 +188,7 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             var kactual = null;
             for (var i = 0; i < res.length; i++) {
                 objeto = res[i];
-                contenido += "<tr>";
+                contenido += `<tr data-valor="${objeto[propID]}">`; //almacena el ID del objeto de la fila
 
                 if (addChecks == true) {
                     contenido += `
@@ -100,12 +201,13 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
                 for (var j = 0; j < llaves.length; j++) {
                     kactual = llaves[j];
                     if (kactual.toUpperCase() != propID.toUpperCase()) {
-                        contenido += "<td>";
+                        ondouble = enableDobleClickElement ? `ondblclick="clickcelda(this)" data-valor="${objeto[kactual]}"` : ''
+                        contenido += `<td ${ondouble}>`;
                         contenido += objeto[kactual];
                         contenido += "</td>";
                     }
                 }
-                if (opcionEdit == true || opcionElimina == true || subpopup == true) {
+                if (opcionEdit == true || opcionElimina == true || subpopup == true || enableDobleClickElement) {
                     contenido += "<td>";
                     if (opcionEdit == true) {
                         contenido += `
@@ -159,7 +261,7 @@ function pintar(url, idDiv = "divTabla", idtabla = "tabla",
             }
 
         })
-        
+
 }
 
 
@@ -208,6 +310,25 @@ function fetchDel(url, callback) {
             }
 
         })
+}
+
+function fetchLogin(url, objeto,callback) {
+    var token = document.getElementsByName("csrfmiddlewaretoken")[0].value
+    fetch(url, {
+        headers: {
+            "Content-type": "application/json",
+            "X-CSRFToken": token,
+        },
+        method: "POST",
+        body: JSON.stringify(objeto),
+    }).then(res => res.text()).then(res => {
+        if (res > 1) {
+            //success()
+            callback()
+        } else {
+            error("Ocurrió un error")
+        }
+    }) 
 }
 
 function fetchPost(url, objeto, callback) {
